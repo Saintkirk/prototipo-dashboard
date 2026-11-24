@@ -105,6 +105,11 @@
     right: 0;
   }
 
+  /* El adorno decorativo no debe sobresalir de la pantalla (evita scroll horizontal) */
+  .main::before {
+    right: 0;
+  }
+
   .top {
     padding: 14px 22px;
   }
