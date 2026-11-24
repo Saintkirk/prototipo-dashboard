@@ -127,11 +127,15 @@ export function initMobileNav(currentRoute) {
     menu.setAttribute('aria-hidden', String(!open));
     menu.inert = !open;
   };
-  setMenu(false);
+  // En pantallas grandes las secciones quedan siempre visibles; en celular se despliegan con el boton.
+  const escritorio = window.matchMedia('(min-width: 1024px)');
+  const sincronizar = () => setMenu(escritorio.matches);
+  sincronizar();
+  escritorio.addEventListener('change', sincronizar);
   toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+    if (e.key === 'Escape' && !escritorio.matches && toggle.getAttribute('aria-expanded') === 'true') {
       setMenu(false);
       toggle.focus();
     }
