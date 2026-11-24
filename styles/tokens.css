@@ -1,0 +1,31 @@
+:root {
+  /* Paleta de marca y superficies */
+  --rojo: #ee0000;
+  --rojo-oscuro: #b90000;
+  --ink: #17212d;
+  --ink-2: #243142;
+  --paper: #f4f6f7;
+  --surface: #ffffff;
+  --surface-2: #e9eef1;
+
+  /* Texto y bordes */
+  --texto: #17212d;
+  --gris: #4c5968;
+  --borde: #d7dee3;
+
+  /* Semánticos */
+  --ok: #146748;
+  --ok-hover: #0c5339;
+  --alerta: #9f1520;
+  --aviso-bg: #fff5dc;
+  --aviso-borde: #ead08a;
+  --aviso-texto: #674600;
+
+  /* Elevación, radios y curvas */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --sombra-card: 0 1px 2px rgba(23, 33, 45, 0.025);
+  --sombra-float: 0 4px 16px rgba(23, 33, 45, 0.08);
+  --radio-sm: 7px;
+  --radio-md: 9px;
+  --radio-lg: 10px;
+}

@@ -1,0 +1,372 @@
+/* Página Índice */
+.index-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 28px 64px;
+}
+
+.index-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 30px;
+}
+
+.index-heading h1 {
+  font-size: 26px;
+  letter-spacing: -0.045em;
+}
+
+.index-heading p {
+  margin-top: 4px;
+  color: var(--gris);
+}
+
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.index-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  padding: 15px 18px;
+  background: #ffffff;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-md);
+  transition: border-color 0.16s, background-color 0.16s, transform 0.16s var(--ease);
+}
+
+.index-link:hover {
+  border-color: #aab6bf;
+  background: #fbfcfc;
+  transform: translateY(-1px);
+}
+
+.index-link strong {
+  display: block;
+}
+
+.index-link small {
+  display: block;
+  color: var(--gris);
+  margin-top: 3px;
+}
+
+.index-arrow {
+  color: var(--rojo);
+  font-size: 20px;
+}
+
+/* Página Login */
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.84fr) minmax(360px, 1.16fr);
+  background: var(--paper);
+}
+
+.login-story {
+  background: var(--ink);
+  color: #ffffff;
+  padding: clamp(32px, 6vw, 88px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.login-story::after {
+  content: "";
+  position: absolute;
+  right: -65px;
+  bottom: 65px;
+  width: 440px;
+  height: 300px;
+  opacity: 0.2;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 240' fill='none' stroke='%23c8d0d7' stroke-opacity='.8'%3E%3Cpath d='M-10 43c48-32 101-39 153-21 55 19 98 9 139-13 48-25 98-24 151 8M-13 68c55-30 104-32 153-13 51 20 99 17 146-7 45-23 94-24 144-2M-13 94c52-23 101-23 151-5 48 17 98 21 150-4 47-23 98-25 146-11'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.login-brand em {
+  font-style: normal;
+  color: #ff4545;
+}
+
+.login-brand .brand-mark {
+  width: 46px;
+  height: 46px;
+}
+
+.login-story-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+}
+
+.login-story h1 {
+  font-size: clamp(32px, 4.4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  margin-bottom: 17px;
+  max-width: 9ch;
+}
+
+.login-story p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: #d3dbe2;
+  max-width: 39ch;
+}
+
+.login-story-meta {
+  position: relative;
+  z-index: 1;
+  color: #bac5ce;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.login-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px clamp(24px, 7vw, 100px);
+}
+
+.login-box {
+  width: min(100%, 470px);
+}
+
+.login-box h2 {
+  font-size: 25px;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+}
+
+.login-box > p {
+  color: var(--gris);
+  margin-bottom: 22px;
+  max-width: 45ch;
+  line-height: 1.55;
+}
+
+.login-box .btn {
+  width: 100%;
+  min-height: 50px;
+}
+
+.login-note {
+  color: var(--gris);
+  font-size: 12px;
+  line-height: 1.55;
+  margin-top: 14px;
+}
+
+.login-box .warn {
+  margin-top: 20px;
+}
+
+.demo-roles {
+  margin-top: 24px;
+  border-top: 1px solid var(--borde);
+  padding-top: 17px;
+}
+
+.demo-roles strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+
+.role-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.role-links a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-sm);
+  padding: 6px 10px;
+  background: #ffffff;
+  font-size: 12px;
+}
+
+.role-links a:hover {
+  border-color: #8b99a5;
+  background: #f7f9fa;
+}
+
+/* Vistas móviles dedicadas (Terreno / Dibujante) */
+.mov {
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--paper);
+  min-height: 100vh;
+  border-inline: 1px solid var(--borde);
+  position: relative;
+}
+
+.mov .bar {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  background: var(--ink);
+  color: #ffffff;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 68px;
+}
+
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+}
+
+.mobile-brand .brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.mobile-brand .brand-mark svg {
+  width: 21px;
+  height: 21px;
+}
+
+.mobile-brand em {
+  font-style: normal;
+  color: #ff4545;
+}
+
+.mov .bar small {
+  display: block;
+  font-weight: 450;
+  color: #d2dae1;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.mov .bar small a {
+  text-decoration: underline;
+}
+
+.mobile-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #53606d;
+  border-radius: 8px;
+  background: #202d3a;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.mobile-menu-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s var(--ease);
+}
+
+.mobile-menu-toggle[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.mobile-menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0.7;
+  transition: grid-template-rows 0.25s var(--ease), opacity 0.18s ease;
+  background: #202d3a;
+}
+
+.mobile-menu.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.mobile-menu-clip {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mobile-menu-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 14px 14px;
+}
+
+.mobile-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: var(--radio-sm);
+  color: #e1e7ed;
+  font-size: 13px;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a[aria-current="page"] {
+  background: #344354;
+  color: #ffffff;
+}
+
+.mobile-menu a[aria-current="page"] {
+  box-shadow: inset 3px 0 var(--rojo);
+}
+
+.mov .cuerpo {
+  padding: 22px 16px 34px;
+}
+
+.mov h2 {
+  font-size: 21px;
+  letter-spacing: -0.035em;
+  margin-bottom: 16px;
+}
+
+.mov .card {
+  margin-bottom: 12px;
+  padding: 16px;
+}
+
+.mov .btn {
+  width: 100%;
+  margin-top: 12px;
+  min-height: 48px;
+}
+
+.mov .nota {
+  padding: 3px 2px;
+}

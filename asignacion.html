@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17212d">
+  <title>Nueva asignación · EGC Ingeniería</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="side"></aside>
+
+    <div class="main">
+      <header class="top">
+        <h1>Nueva asignación</h1>
+        <div class="u">jefe@empresa.cl &nbsp;|&nbsp; <a href="login.html">Salir</a></div>
+      </header>
+
+      <main class="content">
+        <div class="card" style="max-width:720px">
+          <b>Registro de asignación de sitio</b>
+          <p style="font-size:12px;color:#52606d;margin-top:4px">
+            En la V1 el registro es manual y queda en estado <b>Recibido</b>. Si el código Subtel ya existe, se debe alertar duplicidad.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Código Subtel / Sitio</label>
+              <div class="in">0445 · Mirador Sur</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Cliente</label>
+              <div class="in">Entel</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Tipo de visita</label>
+              <div class="in">Levantamiento estructural</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Comuna / región</label>
+              <div class="in">Puente Alto · Metropolitana</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Plazo objetivo</label>
+              <div class="in">05-12-2026</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;margin-bottom:4px">Equipo asignado</label>
+              <div class="in">Equipo A</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+            <a class="btn" href="panel.html">Guardar asignación</a>
+            <a class="btn g" href="panel.html">Cancelar</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="demo">Prototipo navegable · datos ficticios · <a href="index.html"><u>Índice</u></a></div>
+</body>
+</html>
