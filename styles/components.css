@@ -267,3 +267,86 @@ tr.clic:hover td {
   color: var(--gris);
   box-shadow: var(--sombra-float);
 }
+/* Avisos de transición de estado (simulación sin backend) */
+.toast {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: max-content;
+  max-width: min(560px, calc(100vw - 24px));
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #ffffff;
+  border-left: 4px solid #3fbf8f;
+  border-radius: var(--radio-md);
+  padding: 12px 14px 12px 16px;
+  box-shadow: var(--sombra-float);
+  font-size: 13px;
+  animation: toast-in 0.25s var(--ease);
+}
+
+.toast[hidden] { display: none; }
+.toast[data-tipo="error"] { border-left-color: #ff7a7a; }
+.toast-body { display: flex; flex-direction: column; gap: 3px; }
+.toast-texto { font-size: 14px; }
+.toast small { color: #c3ccd4; font-size: 11px; }
+.toast-cerrar {
+  background: transparent;
+  border: 0;
+  color: #c3ccd4;
+  font-size: 20px;
+  line-height: 1;
+  min-width: 28px;
+  min-height: 28px;
+  cursor: pointer;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Resaltes tras una transición */
+.chip-nuevo { animation: chip-pulso 1.4s var(--ease); }
+@keyframes chip-pulso {
+  0% { box-shadow: 0 0 0 0 rgba(22, 128, 91, 0.55); }
+  100% { box-shadow: 0 0 0 10px rgba(22, 128, 91, 0); }
+}
+
+tr.is-new td { animation: fila-nueva 2.4s ease-out; }
+@keyframes fila-nueva {
+  0% { background: #def1db; }
+  100% { background: #ffffff; }
+}
+
+.btn:disabled {
+  background: #e3e8ec;
+  color: #6b7885;
+  border-color: #cfd7dd;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ok-texto { color: var(--ok); font-weight: 650; }
+
+.lista-sitios { display: contents; }
+
+.acceso-denegado h2 { margin: 10px 0 0; font-size: 20px; letter-spacing: -0.03em; }
+.acceso-denegado { max-width: 640px; }
+
+.demo-reset {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.index-heading .demo-reset { margin-left: auto; color: var(--gris); font-size: 12px; }

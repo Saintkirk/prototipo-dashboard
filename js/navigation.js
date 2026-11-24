@@ -1,9 +1,24 @@
 import { svgIcon, ICONS } from './icons.js';
+import { ROLES, MENU_PUBLICO, urlPara } from './roles.js';
 
-const buildNavLink = (href, label, icon, key) =>
-  `<a class="nav-link" href="${href}" data-route="${key}">${svgIcon(ICONS[icon])}<span>${label}</span></a>`;
+const buildNavLink = (archivo, label, icon, rol, opciones = {}) => {
+  if (opciones.deshabilitado) {
+    return `<a class="nav-link nav-link-disabled" aria-disabled="true" title="Disponible en la V2">${svgIcon(ICONS[icon])}<span>${label}</span></a>`;
+  }
+  const href = rol ? urlPara(archivo, rol) : archivo;
+  return `<a class="nav-link" href="${href}" data-route="${archivo}">${svgIcon(ICONS[icon])}<span>${label}</span></a>`;
+};
 
-export function initDesktopNav(currentRoute) {
+// Grupos de menú de un rol (o del menú público si no hay sesión)
+const buildNavGroups = rol => (rol ? ROLES[rol].grupos : MENU_PUBLICO).map(g => `
+        <section class="nav-group" data-nav-group="${g.id}">
+          <button class="nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-${g.id}">${svgIcon(ICONS[g.icono])}<span>${g.titulo}</span>${svgIcon(ICONS.chevron, 'nav-chevron')}</button>
+          <div class="nav-collapse" id="nav-${g.id}"><div class="nav-clip"><div class="nav-links">
+            ${g.links.map(([archivo, label, icon, opciones]) => buildNavLink(archivo, label, icon, rol, opciones)).join('\n            ')}
+          </div></div></div>
+        </section>`).join('');
+
+export function initDesktopNav(currentRoute, rol = null) {
   const desktopSide = document.querySelector('.side');
   if (!desktopSide) return;
 
@@ -14,25 +29,16 @@ export function initDesktopNav(currentRoute) {
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">${svgIcon(ICONS.menu)}<span>Menú</span></button>
     <nav class="primary-nav" id="primary-nav" aria-label="Navegación principal">
       <div class="primary-nav-inner">
-        <div class="nav-label">Plataforma</div>
-        <section class="nav-group" data-nav-group="operacion">
-          <button class="nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-operacion">${svgIcon(ICONS.grid)}<span>Operación</span>${svgIcon(ICONS.chevron, 'nav-chevron')}</button>
-          <div class="nav-collapse" id="nav-operacion"><div class="nav-clip"><div class="nav-links">
-            ${buildNavLink('panel.html', 'Panel', 'panel', 'panel.html')}
-            ${buildNavLink('asignacion.html', 'Nueva asignación', 'add', 'asignacion.html')}
-            ${buildNavLink('detalle.html', 'Sitios', 'sites', 'detalle.html')}
-            <a class="nav-link nav-link-disabled" aria-disabled="true" title="Disponible en la V2">${svgIcon(ICONS.panel)}<span>Calendario · V2</span></a>
-          </div></div></div>
-        </section>
-        <section class="nav-group" data-nav-group="control">
-          <button class="nav-group-toggle" type="button" aria-expanded="false" aria-controls="nav-control">${svgIcon(ICONS.control)}<span>Control</span>${svgIcon(ICONS.chevron, 'nav-chevron')}</button>
-          <div class="nav-collapse" id="nav-control"><div class="nav-clip"><div class="nav-links">
-            ${buildNavLink('revisor.html', 'Revisión', 'review', 'revisor.html')}
-          </div></div></div>
-        </section>
+        <div class="nav-label">${rol ? 'Plataforma' : 'Demostración'}</div>${buildNavGroups(rol)}
       </div>
     </nav>
-    <div class="side-bottom"><strong>${currentRoute === 'revisor.html' ? 'Revisor' : 'Jefe de área'}</strong>Sesión de demostración · Google</div>`;
+    <div class="side-bottom"><strong>${rol ? ROLES[rol].etiqueta : 'Sin sesión'}</strong>Sesión de demostración · Google</div>`;
+
+  // El encabezado muestra al usuario del rol activo (antes quedaba fijo en jefe@empresa.cl)
+  const usuario = document.querySelector('.top .u');
+  if (rol && usuario) {
+    usuario.innerHTML = `${ROLES[rol].correo} &nbsp;|&nbsp; <a href="login.html">Salir</a>`;
+  }
 
   desktopSide.querySelectorAll('.nav-link[data-route]').forEach(a => {
     if (a.dataset.route === currentRoute) {
@@ -40,6 +46,10 @@ export function initDesktopNav(currentRoute) {
       a.closest('.nav-group')?.classList.add('is-open');
     }
   });
+
+  // Con un solo grupo (todos los roles salvo el índice) el menú queda abierto: es lo único que el rol puede hacer
+  const grupos = desktopSide.querySelectorAll('.nav-group');
+  if (grupos.length === 1) grupos[0].classList.add('is-open');
 
   desktopSide.querySelectorAll('.nav-group-toggle').forEach(button => {
     const group = button.closest('.nav-group');
@@ -97,19 +107,13 @@ export function initDesktopNav(currentRoute) {
   });
 }
 
-export function initMobileNav(currentRoute) {
+export function initMobileNav(currentRoute, rol = null) {
   const mobileBar = document.querySelector('.mov .bar');
-  if (!mobileBar) return;
+  if (!mobileBar || !rol) return;
 
-  const role = mobileBar.querySelector('small')?.textContent.trim().split('·')[0].trim() || 'Equipo';
-  const links = [
-    ['panel.html', 'Panel de sitios'],
-    ['asignacion.html', 'Nueva asignación'],
-    ['detalle.html', 'Detalle del sitio'],
-    ['revisor.html', 'Revisión'],
-    ['terreno.html', 'Mis visitas · terreno'],
-    ['dibujante.html', 'Mis planos · dibujo']
-  ];
+  const { etiqueta, identidad, grupos } = ROLES[rol];
+  const links = grupos.flatMap(g => g.links).filter(([archivo]) => archivo).map(([archivo, label]) => [archivo, label]);
+  const role = `${etiqueta} · ${identidad}`;
 
   mobileBar.innerHTML = `<div class="mobile-brand"><span class="brand-mark">${svgIcon(ICONS.mark, '')}</span><span>EGC <em>Ingeniería</em><small>${role} · <a href="login.html">Salir</a></small></span></div><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">${svgIcon(ICONS.menu, '')}<span>Secciones</span></button>`;
 
@@ -117,7 +121,7 @@ export function initMobileNav(currentRoute) {
   menu.className = 'mobile-menu';
   menu.id = 'mobile-menu';
   menu.setAttribute('aria-label', 'Secciones del prototipo');
-  menu.innerHTML = `<div class="mobile-menu-clip"><div class="mobile-menu-links">${links.map(([href, label]) => `<a href="${href}"${currentRoute === href ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</div></div>`;
+  menu.innerHTML = `<div class="mobile-menu-clip"><div class="mobile-menu-links">${links.map(([href, label]) => `<a href="${urlPara(href, rol)}"${currentRoute === href ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</div></div>`;
   mobileBar.insertAdjacentElement('afterend', menu);
 
   const toggle = mobileBar.querySelector('.mobile-menu-toggle');
@@ -148,7 +152,7 @@ export function enhanceResponsiveTables() {
     [...row.cells].forEach((cell, i) => {
       if (headers[i]) cell.dataset.label = headers[i];
     });
-    if (row.hasAttribute('onclick')) {
+    if (row.classList.contains('clic')) {
       row.tabIndex = 0;
       row.setAttribute('role', 'link');
       row.addEventListener('keydown', e => {

@@ -1,9 +1,31 @@
-export function initReviewFlow() {
+import { obtenerSitio, revisarInforme } from './store.js';
+import { ROLES } from './roles.js';
+import { avisoTransicion, avisoRechazo, esc } from './ui.js';
+
+export function initReviewFlow(rol = 'revisor') {
   const reviewHeadingSpan = document.querySelector('#resultado-revision b + span');
   const reviewCard = document.getElementById('resultado-revision');
   if (!reviewCard || !reviewHeadingSpan) return;
 
   const rows = [...document.querySelectorAll('table.res tbody tr')];
+  const idDeFila = tr => tr.cells[0]?.textContent.match(/\d{4}/)?.[0];
+  const contador = document.querySelector('.filtros > div b');
+
+  // Las filas reflejan el estado real: lo ya aprobado o devuelto a terreno deja de estar «listo para revisar»
+  const sincronizarFilas = () => {
+    rows.forEach(tr => {
+      const sitio = obtenerSitio(idDeFila(tr));
+      const celda = tr.cells[tr.cells.length - 1];
+      if (!sitio || !tr.querySelector('a.btn')) return;
+      if (sitio.estado < 3) {
+        celda.innerHTML = '<span class="waiting">Devuelto a terreno</span>';
+      } else if (sitio.revision?.resultado === 'aprobado') {
+        celda.innerHTML = `<span class="ok-texto">Aprobado ${esc(sitio.revision.fecha)}</span>`;
+      }
+    });
+    if (contador) contador.textContent = rows.filter(tr => tr.querySelector('a.btn')).length;
+  };
+  sincronizarFilas();
 
   // Resumen contextual al cargar un sitio para revisión
   let summaryEl = reviewCard.querySelector('.review-site-summary');
@@ -59,6 +81,8 @@ export function initReviewFlow() {
     }
   };
 
+  const filasRevisables = () => rows.filter(tr => tr.querySelector('a.btn'));
+
   rows.forEach(tr => {
     const reviewBtn = tr.querySelector('a.btn');
     if (!reviewBtn) return;
@@ -69,23 +93,36 @@ export function initReviewFlow() {
     });
   });
 
-  const firstReviewableRow = rows.find(tr => tr.querySelector('a.btn'));
+  const firstReviewableRow = filasRevisables()[0];
   if (firstReviewableRow) {
     selectRowForReview(firstReviewableRow, false);
   }
 
   const approveBtn = reviewCard.querySelector('a.btn.ok');
   const observeBtn = reviewCard.querySelector('a.btn.g');
+  const comentario = () => reviewCard.querySelector('.in')?.textContent.replace(/^Comentario:\s*/, '').trim() ?? '';
+  const sitioSeleccionado = () => reviewHeadingSpan.textContent.match(/\d{4}/)?.[0];
+
+  const revisar = (resultado, textoExito) => {
+    const r = revisarInforme(sitioSeleccionado(), resultado, comentario());
+    feedbackEl.style.display = 'block';
+    if (!r.ok) {
+      feedbackEl.textContent = `No se pudo registrar ${reviewHeadingSpan.textContent}: ${r.error}`;
+      avisoRechazo(r.error, ROLES[rol].etiqueta);
+      return;
+    }
+    feedbackEl.textContent = `${textoExito} ${reviewHeadingSpan.textContent}`;
+    sincronizarFilas();
+    avisoTransicion(r, ROLES[rol].etiqueta);
+  };
 
   approveBtn?.addEventListener('click', e => {
     e.preventDefault();
-    feedbackEl.style.display = 'block';
-    feedbackEl.textContent = `Aprobado ${reviewHeadingSpan.textContent}: informe validado; el jefe puede asignar dibujante para pasar a «En dibujo».`;
+    revisar('aprobar', 'Aprobado: informe validado; el jefe ya puede asignar dibujante para pasar a «En dibujo».');
   });
 
   observeBtn?.addEventListener('click', e => {
     e.preventDefault();
-    feedbackEl.style.display = 'block';
-    feedbackEl.textContent = `Observación registrada ${reviewHeadingSpan.textContent}: el informe queda con observaciones y el sitio vuelve a «Visitado» para corrección.`;
+    revisar('observar', 'Observación registrada: el sitio vuelve a «Visitado» para corrección de terreno.');
   });
 }
