@@ -303,3 +303,54 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Vistas de terreno y dibujante en pantallas grandes: se aprovecha el ancho
+   (barra completa, tarjetas en cuadricula, botones con ancho propio).
+   En celular se mantiene la vista de una columna. */
+@media (min-width: 1024px) {
+  .mov {
+    max-width: none;
+    border-inline: 0;
+    background: transparent;
+  }
+
+  .mov .bar {
+    padding-inline: max(28px, calc((100% - 1120px) / 2));
+  }
+
+  .mobile-menu-links {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: max(28px, calc((100% - 1120px) / 2));
+  }
+
+  .mov .cuerpo {
+    max-width: 1176px;
+    margin: 0 auto;
+    padding: 32px 28px 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .mov .cuerpo > h2,
+  .mov .cuerpo > .card:first-of-type {
+    grid-column: 1 / -1;
+  }
+
+  .mov h2 {
+    font-size: 26px;
+    margin-bottom: 0;
+  }
+
+  .mov .card {
+    margin-bottom: 0;
+  }
+
+  .mov .btn {
+    display: inline-flex;
+    width: auto;
+    min-width: 150px;
+    margin-right: 8px;
+  }
+}
