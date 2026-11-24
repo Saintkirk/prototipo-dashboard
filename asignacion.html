@@ -25,10 +25,15 @@
             En la V1 el registro es manual y queda en estado <b>Recibido</b>. Si el código Subtel ya existe, se debe alertar duplicidad.
           </p>
 
+          <form id="form-asignacion" novalidate>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
             <div>
-              <label style="display:block;font-size:12px;margin-bottom:4px">Código Subtel / Sitio</label>
-              <div class="in">0445 · Mirador Sur</div>
+              <label for="codigo" style="display:block;font-size:12px;margin-bottom:4px">Código Subtel *</label>
+              <input class="in" id="codigo" name="codigo" type="text" value="0445" autocomplete="off" inputmode="numeric" aria-describedby="aviso-duplicado" style="width:100%">
+            </div>
+            <div>
+              <label for="nombre" style="display:block;font-size:12px;margin-bottom:4px">Nombre del sitio *</label>
+              <input class="in" id="nombre" name="nombre" type="text" value="Mirador Sur" autocomplete="off" style="width:100%">
             </div>
             <div>
               <label style="display:block;font-size:12px;margin-bottom:4px">Cliente</label>
@@ -52,10 +57,13 @@
             </div>
           </div>
 
+          <div id="aviso-duplicado" class="warn" role="alert" aria-live="polite" hidden style="margin-top:14px"></div>
+
           <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
-            <a class="btn" href="panel.html">Guardar asignación</a>
+            <button class="btn" type="submit" id="guardar">Guardar asignación</button>
             <a class="btn g" href="panel.html">Cancelar</a>
           </div>
+          </form>
         </div>
       </main>
     </div>
