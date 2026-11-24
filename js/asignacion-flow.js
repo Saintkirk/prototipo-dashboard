@@ -1,18 +1,11 @@
-// Validación de duplicado de código Subtel en "Nueva asignación" (datos ficticios del prototipo)
-const SITIOS_EXISTENTES = {
-  '0412': { nombre: 'Cerro Alegre', estado: 'Visita programada' },
-  '0388': { nombre: 'Lomas Norte', estado: 'Informe cargado' },
-  '0431': { nombre: 'Valle Sur', estado: 'En dibujo' },
-  '0377': { nombre: 'Pampa Alta', estado: 'Visitado' },
-  '0420': { nombre: 'Santa Rosa', estado: 'Recibido' },
-  '0399': { nombre: 'Los Pinos', estado: 'Plano listo' },
-  '0365': { nombre: 'El Mirador', estado: 'Entregado' }
-};
+// "Nueva asignación": valida duplicados de código Subtel y registra el sitio en estado «Recibido» (datos ficticios)
+import { buscarExistente, registrarSitio } from './store.js';
+import { urlPara } from './roles.js';
 
 // Normaliza: sin espacios y en mayúsculas ("  04 12 " no cambia el resultado de comparar "0412")
 const normalizar = valor => valor.replace(/\s+/g, '').toUpperCase();
 
-export function initAsignacionFlow() {
+export function initAsignacionFlow(rol = 'jefe') {
   const form = document.getElementById('form-asignacion');
   const codigo = document.getElementById('codigo');
   const nombre = document.getElementById('nombre');
@@ -28,7 +21,7 @@ export function initAsignacionFlow() {
   };
   const ocultar = () => { aviso.hidden = true; aviso.textContent = ''; };
 
-  const buscarDuplicado = () => SITIOS_EXISTENTES[normalizar(codigo.value)] ?? null;
+  const buscarDuplicado = () => buscarExistente(normalizar(codigo.value));
 
   const validar = () => {
     const existente = buscarDuplicado();
@@ -56,7 +49,8 @@ export function initAsignacionFlow() {
       return;
     }
     if (!validar()) { codigo.focus(); return; }
-    location.href = 'panel.html';
+    const sitio = registrarSitio({ id: normalizar(codigo.value), nombre: nombre.value.trim() });
+    location.href = urlPara('panel.html', rol, { nuevo: sitio.id });
   });
 
   validar();
