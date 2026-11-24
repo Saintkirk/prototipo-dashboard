@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17212d">
+  <title>Panel de sitios · EGC Ingeniería</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="side"></aside>
+
+    <div class="main">
+      <header class="top">
+        <h1>Panel de sitios</h1>
+        <div class="u">jefe@empresa.cl &nbsp;|&nbsp; <a href="login.html">Salir</a></div>
+      </header>
+
+      <main class="content">
+        <section class="kpis" aria-label="Estados del sitio">
+          <div class="kpi"><b>3</b><span class="chip s1">Recibido</span></div>
+          <div class="kpi"><b>2</b><span class="chip s2">Visita programada</span></div>
+          <div class="kpi"><b>1</b><span class="chip s3">Visitado</span></div>
+          <div class="kpi"><b>2</b><span class="chip s4">Informe cargado</span></div>
+          <div class="kpi"><b>4</b><span class="chip s5">En dibujo</span></div>
+          <div class="kpi"><b>1</b><span class="chip s6">Plano listo</span></div>
+          <div class="kpi"><b>5</b><span class="chip s7">Entregado</span></div>
+          <div class="kpi"><b>6</b><span class="chip s8">Facturado</span></div>
+        </section>
+
+        <div class="card filtros">
+          <div>
+            <label for="filtro-estado">Estado</label>
+            <select id="filtro-estado" class="in">
+              <option>Todos</option>
+              <option>Recibido</option>
+              <option>Visita programada</option>
+              <option>Visitado</option>
+              <option>Informe cargado</option>
+              <option>En dibujo</option>
+              <option>Plano listo</option>
+              <option>Entregado</option>
+              <option>Facturado</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-equipo">Equipo</label>
+            <select id="filtro-equipo" class="in">
+              <option>Todos</option>
+              <option>Equipo A</option>
+              <option>Equipo B</option>
+              <option>Contratista 1</option>
+              <option>Dibujante 2</option>
+              <option>Revisor</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-cliente">Cliente</label>
+            <select id="filtro-cliente" class="in">
+              <option>Entel y WOM</option>
+              <option>Entel</option>
+              <option>WOM</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-plazo">Plazo</label>
+            <select id="filtro-plazo" class="in">
+              <option>Este mes</option>
+              <option>Esta semana</option>
+              <option>Todos</option>
+            </select>
+          </div>
+          <div class="warn">2 sitios con atraso</div>
+          <a class="btn" href="asignacion.html">+ Nueva asignación</a>
+        </div>
+
+        <table class="res">
+          <thead>
+            <tr>
+              <th>Sitio</th>
+              <th>Cliente</th>
+              <th>Tipo de visita</th>
+              <th>Estado</th>
+              <th>Responsable</th>
+              <th>Plazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="clic" onclick="location.href='detalle.html'">
+              <td><b>0412</b> · Cerro Alegre</td>
+              <td>Entel</td>
+              <td>Proyección</td>
+              <td><span class="chip s2">Visita programada</span></td>
+              <td>Equipo A</td>
+              <td>Plazo 28-11</td>
+            </tr>
+            <tr class="clic" onclick="location.href='detalle.html'">
+              <td><b>0388</b> · Lomas Norte</td>
+              <td>WOM</td>
+              <td>Levantamiento estructural</td>
+              <td><span class="chip s4">Informe cargado</span></td>
+              <td>Revisor</td>
+              <td><span class="late">Plazo 25-11 atraso</span></td>
+            </tr>
+            <tr class="clic" onclick="location.href='detalle.html'">
+              <td><b>0431</b> · Valle Sur</td>
+              <td>Entel</td>
+              <td>Levantamiento fotográfico</td>
+              <td><span class="chip s5">En dibujo</span></td>
+              <td>Dibujante 2</td>
+              <td>Plazo 30-11</td>
+            </tr>
+            <tr class="clic" onclick="location.href='detalle.html'">
+              <td><b>0377</b> · Pampa Alta</td>
+              <td>WOM</td>
+              <td>Proyección</td>
+              <td><span class="chip s3">Visitado</span></td>
+              <td>Contratista 1</td>
+              <td><span class="late">Plazo 24-11 atraso</span></td>
+            </tr>
+            <tr class="clic" onclick="location.href='detalle.html'">
+              <td><b>0420</b> · Santa Rosa</td>
+              <td>Entel</td>
+              <td>Levantamiento estructural</td>
+              <td><span class="chip s1">Recibido</span></td>
+              <td>Jefe de área</td>
+              <td>Plazo 02-12</td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <div class="demo">Prototipo navegable · datos ficticios · <a href="index.html"><u>Índice</u></a></div>
+</body>
+</html>
